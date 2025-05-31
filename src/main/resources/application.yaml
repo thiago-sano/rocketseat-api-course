@@ -1,0 +1,20 @@
+server:
+  port: 8081
+  servlet:
+    context-path: '/rocketseat-api/'
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/rocketseat-api-course
+    username: rocketseat
+    password: r0ck3ts34t
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        jdbc:
+          lob:
+            non-contextual-creation: true

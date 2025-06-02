@@ -4,7 +4,7 @@
 This project was developed as part of the [Rocketseat Java course](https://app.rocketseat.com.br/journey/java/contents).
 
 ## Project goals
-Create a REST API for a programming course company. At this first moment, should be a CRUD API.
+Create a REST API for a programming course company. At this first moment, this should be a CRUD API.
 
 API functionalities:
 
@@ -24,7 +24,7 @@ API functionalities:
 
 ## Project architecture
 
-In this project, we`ll try to apply the Hexagonal Architecture, following the folder structure below:
+In this project, we'll try to apply the Hexagonal Architecture, following the folder structure below:
 ```src
 +-- adapters
 |   +-- input
@@ -45,9 +45,9 @@ In this project, we`ll try to apply the Hexagonal Architecture, following the fo
 `application`: business logic and rules  
 `application/services`: services implementation  
 `application/usecases`: services interfaces  
-`infrastructure`: tool configuration (spring, sdk, libraries, etc)  
+`infrastructure`: tool configuration (spring, sdk, libraries, etc.)  
 `domain`: domain entities  
-`domain/course`: course entitiy  
+`domain/course`: course entity  
 
 ## Class diagram
 ```mermaid
@@ -65,8 +65,9 @@ ACTIVE
 INACTIVE
 }
 class CourseController {
+- getAllCourses
+- getCourseById
 - createCourse
-- getCourse
 - updateCourse
 - deleteCourse
 }

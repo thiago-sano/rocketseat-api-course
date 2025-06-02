@@ -10,4 +10,6 @@ public interface CourseService {
     List<Course> findAll();
 
     Optional<Course> findById(UUID courseId);
+
+    void deleteCourse(UUID courseId);
 }

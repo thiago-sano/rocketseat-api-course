@@ -32,4 +32,13 @@ public class CourseServiceImpl implements CourseService {
         }
         return courseOptional;
     }
+
+    @Override
+    public void deleteCourse(UUID courseId) {
+        Optional<Course> courseOptional = courseRepository.findById(courseId);
+        if(courseOptional.isEmpty()){
+            throw new NotFoundException("Error: course not found");
+        }
+        courseRepository.deleteById(courseId);
+    }
 }

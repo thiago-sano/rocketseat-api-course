@@ -1,6 +1,7 @@
 package br.com.rocketseat.apicourse.application.services;
 
 import br.com.rocketseat.apicourse.adapters.output.repositories.CourseRepository;
+import br.com.rocketseat.apicourse.application.exceptions.NotFoundException;
 import br.com.rocketseat.apicourse.application.usecases.CourseService;
 import br.com.rocketseat.apicourse.domain.course.Course;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,10 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public Optional<Course> findById(UUID courseId) {
-        return courseRepository.findById(courseId);
+        Optional<Course> courseOptional = courseRepository.findById(courseId);
+        if(courseOptional.isEmpty()){
+            throw new NotFoundException("Error: course not found");
+        }
+        return courseOptional;
     }
 }

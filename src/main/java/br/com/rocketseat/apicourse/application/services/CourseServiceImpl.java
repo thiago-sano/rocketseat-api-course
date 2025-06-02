@@ -6,6 +6,8 @@ import br.com.rocketseat.apicourse.domain.course.Course;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class CourseServiceImpl implements CourseService {
@@ -19,5 +21,10 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public List<Course> findAll() {
         return courseRepository.findAll();
+    }
+
+    @Override
+    public Optional<Course> findById(UUID courseId) {
+        return courseRepository.findById(courseId);
     }
 }

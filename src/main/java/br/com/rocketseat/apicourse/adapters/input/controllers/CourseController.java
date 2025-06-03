@@ -2,6 +2,8 @@ package br.com.rocketseat.apicourse.adapters.input.controllers;
 
 import br.com.rocketseat.apicourse.application.usecases.CourseService;
 import br.com.rocketseat.apicourse.domain.course.Course;
+import br.com.rocketseat.apicourse.domain.course.dtos.CourseRecordDto;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -38,4 +40,13 @@ public class CourseController {
     public ResponseEntity<Object> updateCourseStatus(@PathVariable(value = "courseId") UUID courseId) {
         return ResponseEntity.status(HttpStatus.OK).body(courseService.updateCourseStatus(courseId));
     }
+
+    @PostMapping("/create")
+    public ResponseEntity<Object> createCourse(@RequestBody @Valid CourseRecordDto courseRecordDto) {
+        if (courseService.existsByName(courseRecordDto.name())){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Error: Course name is already taken!");
+        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(courseService.createCourse(courseRecordDto));
+    }
+
 }

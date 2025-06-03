@@ -1,6 +1,7 @@
 package br.com.rocketseat.apicourse.application.usecases;
 
 import br.com.rocketseat.apicourse.domain.course.Course;
+import br.com.rocketseat.apicourse.domain.course.dtos.CourseRecordDto;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,4 +15,8 @@ public interface CourseService {
     void deleteCourse(UUID courseId);
 
     Course updateCourseStatus(UUID courseId);
+
+    Course createCourse(CourseRecordDto courseRecordDto);
+
+    boolean existsByName(String name);
 }

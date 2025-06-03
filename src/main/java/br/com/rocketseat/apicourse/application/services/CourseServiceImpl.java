@@ -4,7 +4,11 @@ import br.com.rocketseat.apicourse.adapters.output.repositories.CourseRepository
 import br.com.rocketseat.apicourse.application.exceptions.NotFoundException;
 import br.com.rocketseat.apicourse.application.usecases.CourseService;
 import br.com.rocketseat.apicourse.domain.course.Course;
+import br.com.rocketseat.apicourse.domain.course.dtos.CourseRecordDto;
 import br.com.rocketseat.apicourse.domain.course.enums.Status;
+import org.springframework.beans.BeanUtils;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -54,5 +58,18 @@ public class CourseServiceImpl implements CourseService {
             courseOptional.get().setStatus(Status.ACTIVE);
         }
         return courseRepository.save(courseOptional.get());
+    }
+
+    @Override
+    public Course createCourse(CourseRecordDto courseRecordDto) {
+        var course = new Course();
+        BeanUtils.copyProperties(courseRecordDto, course);
+        course.setStatus(Status.ACTIVE);
+        return courseRepository.save(course);
+    }
+
+    @Override
+    public boolean existsByName(String name) {
+        return courseRepository.existsByName(name);
     }
 }

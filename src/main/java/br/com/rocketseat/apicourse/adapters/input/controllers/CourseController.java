@@ -33,4 +33,9 @@ public class CourseController {
     public void deleteCourse(@PathVariable(value = "courseId") UUID courseId) {
         courseService.deleteCourse(courseId);
     }
+
+    @PatchMapping("/{courseId}/active")
+    public ResponseEntity<Object> updateCourseStatus(@PathVariable(value = "courseId") UUID courseId) {
+        return ResponseEntity.status(HttpStatus.OK).body(courseService.updateCourseStatus(courseId));
+    }
 }

@@ -12,4 +12,6 @@ public interface CourseService {
     Optional<Course> findById(UUID courseId);
 
     void deleteCourse(UUID courseId);
+
+    Course updateCourseStatus(UUID courseId);
 }

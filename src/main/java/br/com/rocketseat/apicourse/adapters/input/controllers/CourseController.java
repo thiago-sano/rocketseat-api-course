@@ -50,4 +50,9 @@ public class CourseController {
         return ResponseEntity.status(HttpStatus.CREATED).body(courseService.createCourse(courseRecordDto));
     }
 
+    @PutMapping("/{courseId}")
+    public ResponseEntity<Object> updateCourse(@PathVariable(value = "courseId") UUID courseId, @RequestBody CourseRecordDto courseRecordDto) {
+        return ResponseEntity.status(HttpStatus.OK).body(courseService.updateCourse(courseId, courseRecordDto));
+    }
+
 }

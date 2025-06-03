@@ -72,4 +72,20 @@ public class CourseServiceImpl implements CourseService {
     public boolean existsByName(String name) {
         return courseRepository.existsByName(name);
     }
+
+    @Override
+    public Course updateCourse(UUID courseId, CourseRecordDto courseRecordDto) {
+        Optional<Course> courseOptional = courseRepository.findById(courseId);
+        if (courseOptional.isEmpty()) {
+            throw new NotFoundException("Error: course not found");
+        }
+        if (courseRecordDto.name() != null && courseRecordDto.category() == null) {
+            courseOptional.get().setName(courseRecordDto.name());
+        } else if (courseRecordDto.name() == null && courseRecordDto.category() != null) {
+            courseOptional.get().setCategory(courseRecordDto.category());
+        } else {
+            BeanUtils.copyProperties(courseRecordDto, courseOptional.get());
+        }
+        return courseRepository.save(courseOptional.get());
+    }
 }

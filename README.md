@@ -52,33 +52,52 @@ In this project, we'll try to apply the Hexagonal Architecture, following the fo
 ## Class diagram
 ```mermaid
 classDiagram
-class Course {
-- UUID id
-- String name
-- String category
-- LocalDateTime created_at
-- LocalDateTime updated_at
-}
-class Status {
-<<enumeration>>
-ACTIVE
-INACTIVE
-}
-class CourseController {
-- getAllCourses
-- getCourseById
-- createCourse
-- updateCourse
-- deleteCourse
-}
-class CourseService {
-<<interface>>
-
+    Course <.. Status : status
+    CourseController <.. CourseService : courseService
+    CourseServiceImpl <|-- CourseService : implements
+    CourseServiceImpl <.. CourseRepository : courseRepository
+    class Course {
+        - UUID id
+        - String name
+        - String category
+        - LocalDateTime created_at
+        - LocalDateTime updated_at
+    }
+    class Status {
+        <<enumeration>>
+        ACTIVE
+        INACTIVE
+    }
+    class CourseController {
+        + getAllCourses() ResponseEntity~Course~
+        + getCourseById(courseId: UUID) ResponseEntity~Course~
+        + deleteCourse(courseId: UUID) ResponseEntity~Object~
+        + updateCourseStatus(courseId: UUID) ResponseEntity~Object~
+        + createCourse(courseRecordDto: CourseRecordDto) ResponseEntity~Object~
+        + updateCourse(courseId: UUID, courseRecordDto: CourseRecordDto) ResponseEntity~Object~
+    }
+    class CourseService {
+        <<interface>>
+        findAll() List~Course~
+        findById(courseId: UUID) Optional~Course~
+        deleteCourse(courseId: UUID) void
+        updateCourseStatus(courseId: UUID) Course
+        createCourse(courseRecordDto: CourseRecordDto) Course
+        existsByName(name: String) boolean
+        updateCourse(courseId: UUID, courseRecordDto: CourseRecordDto) Course
+    
     }
     class CourseServiceImpl {
-        
+        + findAll() List~Course~
+        + findById(courseId: UUID) Optional~Course~
+        + deleteCourse(courseId: UUID) void
+        + updateCourseStatus(course: UUID) Course
+        + createCourse(courseRecordDto: CourseRecordDto) Course
+        + existsByName(name: String) boolean
+        + updateCourse(courseId: UUID, courseRecordDto: CourseRecordDto) Course
     }
     class CourseRepository {
-        
+        <<interface>>
+        existsByName(name: String) boolean
     }
 ```
